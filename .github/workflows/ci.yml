@@ -48,7 +48,7 @@ jobs:
               wget -q https://github.com/KindleModding/koxtoolchain/releases/latest/download/${{ matrix.tc }}.tar.gz -O - | tar -xzf - -C ~
       - name: Build SDK
         run: |
-              bash ./kindle-sdk/gen-sdk.sh ${{ matrix.tc }}
+              bash gen-sdk.sh ${{ matrix.tc }}
       - name: Package artifacts
         run: tar -C ~ -czf ${{ matrix.tc }}.tar.gz x-tools
       - name: Upload artifacts
