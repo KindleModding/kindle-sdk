@@ -66,6 +66,7 @@ Setup_SDK() {
     echo "sys_root = '$tc_dir/$tc_target/sysroot'" >> $tc_dir/meson-crosscompile.txt
     echo "pkg_config_libdir = '$tc_dir/$tc_target/sysroot/usr/lib/pkgconfig'" >> $tc_dir/meson-crosscompile.txt
     echo "target='Kindle'" >> $tc_dir/meson-crosscompile.txt
+    echo "kindle_platform='$sdk_target'" >> $tc_dir/meson-crosscompile.txt
     echo "arch = '$arch'" >> $tc_dir/meson-crosscompile.txt
     chmod -f a-w $tc_dir/meson-crosscompile.txt
 
@@ -85,7 +86,7 @@ Setup_SDK() {
         echo "Downloading from: ${FIRM_URLS[i]}"
         if command -v aria2c >/dev/null 2>&1
         then
-            aria2c -s 16 -x 16 -k 2M "${FIRM_URLS[i]}" -o "./cache/${tc_target}/firmware_${i}.bin"
+            aria2c -s 16 -x 16 -k 2M "${FIRM_URLS[i]}" -o "./cache/${tc_target}/firmware_${i}.bin" || curl --progress-bar -L -C - -o "./cache/${tc_target}/firmware_${i}.bin" "${FIRM_URLS[i]}"
         else
             curl --progress-bar -L -C - -o "./cache/${tc_target}/firmware_${i}.bin" "${FIRM_URLS[i]}"
         fi
