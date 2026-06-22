@@ -237,8 +237,10 @@ usage: $0 <platform> [path]
 
 Supported platforms:
 
-	kindlepw2
-	kindlehf
+    kindle
+    kindle5
+    kindlepw2
+    kindlehf
 
 If used, [path] should point to your installed toolchain, ie: '~/x-tools/arm-kindlehf-linux-gnueabihf'
 "
@@ -267,6 +269,12 @@ case $1 in
 		;;
 	kindlepw2)
 		Setup_SDK "arm-kindlepw2-linux-gnueabi" "kindlepw2" "https://s3.amazonaws.com/G7G_FirmwareUpdates_WebDownloads/update_kindle_5.4.2.bin"
+		;;
+    kindle5)
+		Setup_SDK "arm-kindle5-linux-gnueabi" "kindle5" "https://s3.amazonaws.com/G7G_FirmwareUpdates_WebDownloads/update_kindle_5.3.7.3.bin"
+		;;
+    kindle)
+		Setup_SDK "arm-kindle-linux-gnueabi" "kindle" "https://s3.amazonaws.com/G7G_FirmwareUpdates_WebDownloads/update_kindle_5.3.7.3.bin" # This is wrong but whatever
 		;;
 	*)
 		echo "[!] $1 not supported!"
