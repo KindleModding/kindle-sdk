@@ -191,12 +191,14 @@ Setup_SDK() {
     for i in "${!FIRM_URLS[@]}"; do
         echo "  - Copying firmware ${i}"
         set +e
+        sudo chmod -f -R a+r ./cache/${tc_target}/firmware_${i}/mnt/usr/lib/
+        sudo chmod -f -R a+r ./cache/${tc_target}/firmware_${i}/mnt/lib/
         cp -rn --remove-destination ./cache/${tc_target}/firmware_${i}/mnt/usr/lib/* $sysroot_dir/usr/lib/
         cp -rn --remove-destination ./cache/${tc_target}/firmware_${i}/mnt/lib/* $sysroot_dir/lib/
         set -e
     done
-    sudo chown -R $USER: ${sysroot_dir}/usr/lib/*
-    sudo chown -R $USER: ${sysroot_dir}/lib/*
+    sudo chown -R $USER: ${sysroot_dir}/usr/lib/
+    sudo chown -R $USER: ${sysroot_dir}/lib/
     echo "[*] Patching symlinks"
     set +e # Temporarially disable error checking because some of these will fail bc they're referencing nonexistent targets
     find $sysroot_dir/usr/lib -type l -ls | grep "\-> /" | grep -v "\-> $sysroot_dir" | awk -v sysroot_dir="$sysroot_dir" '{print "rm " $11 "; ln -sf " sysroot_dir $13 " " $11}' | sh
